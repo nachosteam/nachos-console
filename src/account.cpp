@@ -85,7 +85,7 @@ void create_file()
     out.open("settings.json");
     if (out.is_open())
     {
-        out << "{" << std::endl << "\t\"username\": \"null\"," << std::endl << "\t\"pcname\": \"pc\"," << std::endl << "\t\"repos\": [\"https://forgejo.r2squad.ru/eraserteam/nc-repo\"]" << std::endl << "}";
+        out << "{" << std::endl << "\t\"username\": \"null\"," << std::endl << "\t\"pcname\": \"pc\"," << std::endl << "\t\"repos\": [\"https://github.com/nachosteam/nc-repo\"]" << std::endl << "}";
 		out.close();
     }
 	out.open("password");
