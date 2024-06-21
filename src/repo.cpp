@@ -90,13 +90,13 @@ void Repo::downloadPackage(std::string package) {
     json data = json::parse(i);
     std::string pkg_name = data["pkg_name"];
     std::string pkg_ver = data["pkg_ver"];
-    std::string pkg_weight = data["pkg_weight"];
+    std::string pkg_size = data["pkg_size"];
     std::string pkg_creator = data["pkg_creator"];
     std::string pkg_link = data["pkg_link"];
 
     std::cout << "\tPackage: " << pkg_name << std::endl
     << "\tVersion: " << pkg_ver << std::endl
-    << "\tWeight: " << pkg_weight << std::endl
+    << "\tSize: " << pkg_size << std::endl
     << "\tBy: " << pkg_creator << std::endl
     << "\tOriginal: " << pkg_link << std::endl;
 
