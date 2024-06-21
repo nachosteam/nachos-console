@@ -63,10 +63,10 @@ int main()
             cout << "...................." << endl <<
                     "....######.######...\t" CNAME << endl <<
                     "....#........#......\t" ver << endl <<
-                    "....#........#......\tBy EraserTeam" << endl <<
+                    "....#........#......\tBy NachosTeam" << endl <<
                     "....####.....#......\t2024" << endl <<
                     "....#........#......" << endl <<
-                    "....#........#......\thttps://forgejo.r2squad.ru/eraserteam/nachos-console" << endl <<
+                    "....#........#......\thttps://github.com/nachosteam/nachos-console" << endl <<
                     "....##########......" << endl <<
                     "...................." << endl;
 		}
