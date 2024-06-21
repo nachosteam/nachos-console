@@ -11,7 +11,7 @@
 #include "other_comms.hpp"
 
 #define CNAME "NachosConsole"
-#define ver "1.1.4"
+#define ver "1.1.42"
 #ifdef _WIN32
 	#define DIR_COMM "dir "
 	#define CLEAR_COMM "cls"

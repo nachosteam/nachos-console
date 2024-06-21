@@ -4,11 +4,11 @@
 #include <fstream>
 
 #ifdef _WIN32
-    #define REPO_LINK std::string("/raw/branch/main/win32/")
+    #define REPO_LINK std::string("/raw/main/win32/")
     #define FILE_EXTENSION ".exe"
     #define REMOVE_COMMAND "del"
 #elif __unix__
-    #define REPO_LINK std::string("/raw/branch/main/unix/")
+    #define REPO_LINK std::string("/raw/main/unix/")
     #define FILE_EXTENSION ""
     #define REMOVE_COMMAND "rm"
 #endif
