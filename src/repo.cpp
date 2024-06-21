@@ -32,7 +32,7 @@ void Repo::downloadPackage(std::string package) {
             std::string content;
             getline(file, content);
 
-            if (content == "404: Not Found" || content.empty()) {
+            if (content == "404: Not Found" || content.empty() || content == "{\"error\":\"Not Found\"}") {
                 if (content.empty()) {
                     throw std::runtime_error("Error connection");
                 }
