@@ -4,11 +4,11 @@
 #include <fstream>
 
 #ifdef _WIN32
-    #define REPO_LINK std::string("/raw/main/win32/")
+    #define REPO_LINK std::string("/main/win32/")
     #define FILE_EXTENSION ".exe"
     #define REMOVE_COMMAND "del"
 #elif __unix__
-    #define REPO_LINK std::string("/raw/main/unix/")
+    #define REPO_LINK std::string("/main/unix/")
     #define FILE_EXTENSION ""
     #define REMOVE_COMMAND "rm"
 #endif
@@ -32,7 +32,7 @@ void Repo::downloadPackage(std::string package) {
             std::string content;
             getline(file, content);
 
-            if (content == "404: Not found." || content.empty()) {
+            if (content == "404: Not Found" || content.empty()) {
                 if (content.empty()) {
                     throw std::runtime_error("Error connection");
                 }
