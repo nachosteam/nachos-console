@@ -11,5 +11,5 @@ the another console on C++
 #### or [download latest from releases](https://github.com/nachosteam/nachos-console/releases)
 
 # GPG developer keys
-### [Tolya Gosuslugi](https://raw.githubusercontent.com/nachosteam/nachos-console/main/semka_-_Nikolai.asc)
-### [semka](https://raw.githubusercontent.com/nachosteam/nachos-console/main/semka_-_Nikolai.asc)
+### [Tolya Gosuslugi](https://cdn.discordapp.com/attachments/1229793694140469310/1253692272080453642/semka_-_Nikolai.asc?ex=6676c76a&is=667575ea&hm=f0c28dffcaf393fc787eb643cfd656c65a65e53f107fa8883bc2aaefaef76bfc&)
+### [semka](https://cdn.discordapp.com/attachments/1229793694140469310/1253692272080453642/semka_-_Nikolai.asc?ex=6676c76a&is=667575ea&hm=f0c28dffcaf393fc787eb643cfd656c65a65e53f107fa8883bc2aaefaef76bfc&)
