@@ -8,8 +8,8 @@ the another console on C++
 ### FOR LINUX
 ##### ```g++ -static -lstdc++fs -std=c++17 main.cpp repo.cpp account.cpp pkg-del.cpp other_comms.cpp -o main```
 
-#### or [download latest from releases](https://forgejo.r2squad.ru/eraserteam/nachos-console/releases)
+#### or [download latest from releases](https://github.com/nachosteam/nachos-console/releases)
 
 # GPG developer keys
-### [Tolya Gosuslugi](https://r2squad.ru/gpg_keys/anchosus_-_Nikita_Belov.asc)
-### [semka](https://r2squad.ru/gpg_keys/semka_-_Nikolai.asc)
+### [Tolya Gosuslugi](https://raw.githubusercontent.com/nachosteam/nachos-console/main/semka_-_Nikolai.asc?token=GHSAT0AAAAAACR7MKFODTSKFBMN24PPJR56ZTVNQTQ)
+### [semka](https://raw.githubusercontent.com/nachosteam/nachos-console/main/semka_-_Nikolai.asc?token=GHSAT0AAAAAACR7MKFODTSKFBMN24PPJR56ZTVNQTQ)
