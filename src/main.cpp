@@ -11,15 +11,17 @@
 #include "other_comms.hpp"
 
 #define CNAME "NachosConsole"
-#define ver "1.1.5"
+#define ver "1.1.6"
 #ifdef _WIN32
 	#define DIR_COMM "dir "
 	#define CLEAR_COMM "cls"
 	#define PATH_TO_PROG pathIn + "\\pkg\\" + term_input + ".exe"
+	#define PROG_FULL pathIn + "\\pkg\\" + fullpkg_params
 #elif __unix__
 	#define DIR_COMM "ls "
 	#define CLEAR_COMM "clear"
 	#define PATH_TO_PROG "pkg/" + term_input
+	#define PROG_FULL "pkg/" + fullpkg_params
 #endif
 using namespace std;
 using json = nlohmann::json;
@@ -44,8 +46,10 @@ int main()
 		string passwd_back;
         string term_input;
 		string parameter;
+		string fullpkg_params;
         cout << user() << "@" << pcname() << " [" << whereAmI << "]$ ";
         getline(cin, term_input);
+		fullpkg_params = term_input;
 		istringstream iss(term_input);
 		iss >> term_input;
         if(term_input == "help")
@@ -61,13 +65,13 @@ int main()
         else if(term_input == "about")
         {
             cout << "...................." << endl <<
-                    "....######.######...\t" CNAME << endl <<
-                    "....#........#......\t" ver << endl <<
-                    "....#........#......\tBy NachosTeam" << endl <<
-                    "....####.....#......\t2024" << endl <<
-                    "....#........#......" << endl <<
-                    "....#........#......\thttps://github.com/nachosteam/nachos-console" << endl <<
-                    "....##########......" << endl <<
+                    "....#.....#.######...\t" CNAME << endl <<
+                    "....##....#...#......\t" ver << endl <<
+                    "....#.#...#...#......\tBy NachosTeam" << endl <<
+                    "....#..#..#...#......\t2024" << endl <<
+                    "....#...#.#...#......" << endl <<
+                    "....#....##...#......\thttps://github.com/nachosteam/nachos-console" << endl <<
+                    "....#.....#...#......" << endl <<
                     "...................." << endl;
 		}
         else if(term_input == "exit")
@@ -114,13 +118,6 @@ int main()
 				<< "-s|--sync\tsync pkg" << endl
 				<< "-r|--remove\tremove pkg" << endl;
 			}
-			else if (parameter == "-govnokod")
-			{
-				iss >> action;
-				cout << "aaa pashalko" << endl
-				<< "kod pisali tolik gosyslygi" << endl
-				<< "honak, i semka" << endl;
-			}
 			else
 				cout << "Unknown parameter. Type 'pkg --help'" << endl;
 		}
@@ -134,7 +131,7 @@ int main()
 		{
 			if (filesystem::exists(PATH_TO_PROG))
 			{
-				string app_launch = PATH_TO_PROG;
+				string app_launch = PROG_FULL;
 				system(app_launch.c_str());
 			}
 			else if (term_input != "")
