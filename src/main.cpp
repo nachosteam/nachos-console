@@ -12,23 +12,28 @@
 #include "other_comms.hpp"
 
 #define CNAME "NachosConsole"
-#define ver "1.1.61"
+#define ver "1.1.62"
 #ifdef _WIN32
+	#include <windows.h>
 	#define DIR_COMM "dir "
 	#define CLEAR_COMM "cls"
 	#define PATH_TO_PROG "pkg\\" + term_input + ".exe"
-	#define PROG_FULL "pkg\\" + fullpkg_params
+	#define PROG_FULL "pkg\\" + fullcom
+	#define WIN_UTF8 SetConsoleOutputCP(CP_UTF8)
 #elif __unix__
 	#define DIR_COMM "ls "
 	#define CLEAR_COMM "clear"
 	#define PATH_TO_PROG "pkg/" + term_input
-	#define PROG_FULL "pkg/" + fullpkg_params
+	#define PROG_FULL "pkg/" + fullcom
+	#define WIN_UTF8 cout << endl
 #endif
 using namespace std;
 using json = nlohmann::json;
 
 int main()
 {
+	setlocale(LC_ALL, "en_US.UTF-8");
+	WIN_UTF8;
 	if (!filesystem::exists("./pkg"))
 		system("mkdir pkg");
 	
@@ -47,10 +52,10 @@ int main()
 		string passwd_back;
         string term_input;
 		string parameter;
-		string fullpkg_params;
+		string fullcom;
 		cout << user() << "@" << pcname() << " [" << whereAmI << "]$ ";
         getline(cin, term_input);
-		fullpkg_params = term_input;
+		fullcom = term_input;
 		istringstream iss(term_input);
 		iss >> term_input;
         if(term_input == "help")
@@ -60,6 +65,7 @@ int main()
             "clear						clear console" << endl <<
 			"pkg [parameter] [package]			get/remove pkg" << endl <<
 			"ls						shows the contents of the directory" << endl <<
+			"echo						displays messages" << endl <<
 			"exit						close " CNAME << endl;
             cout << endl;
         }
@@ -128,6 +134,10 @@ int main()
 			string dir_cmd = DIR_COMM + parameter;
 			system(dir_cmd.c_str());
 		}
+		else if (term_input == "echo")
+		{
+			system(fullcom.c_str());
+		}
 		/*else if (term_input == "test")
 		{
 			const char* str = "Привет, Hello";
@@ -145,8 +155,6 @@ int main()
 			}
 			else if (term_input != "")
 				cout << "Unknown command: " << term_input << endl;
-				cout << "PATH_TO_PROG: "<< PATH_TO_PROG << endl;
-				cout << "PROG_FULL: " << PROG_FULL << endl;
 		}
     }
 }
