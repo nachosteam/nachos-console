@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <sstream>
 #include <functional>
+#include <locale>
 #include "json.hpp"
 #include "repo.hpp"
 #include "account.hpp"
@@ -11,12 +12,12 @@
 #include "other_comms.hpp"
 
 #define CNAME "NachosConsole"
-#define ver "1.1.6"
+#define ver "1.1.61"
 #ifdef _WIN32
 	#define DIR_COMM "dir "
 	#define CLEAR_COMM "cls"
-	#define PATH_TO_PROG pathIn + "\\pkg\\" + term_input + ".exe"
-	#define PROG_FULL pathIn + "\\pkg\\" + fullpkg_params
+	#define PATH_TO_PROG "pkg\\" + term_input + ".exe"
+	#define PROG_FULL "pkg\\" + fullpkg_params
 #elif __unix__
 	#define DIR_COMM "ls "
 	#define CLEAR_COMM "clear"
@@ -47,7 +48,7 @@ int main()
         string term_input;
 		string parameter;
 		string fullpkg_params;
-        cout << user() << "@" << pcname() << " [" << whereAmI << "]$ ";
+		cout << user() << "@" << pcname() << " [" << whereAmI << "]$ ";
         getline(cin, term_input);
 		fullpkg_params = term_input;
 		istringstream iss(term_input);
@@ -64,15 +65,15 @@ int main()
         }
         else if(term_input == "about")
         {
-            cout << "...................." << endl <<
-                    "....#.....#.######...\t" CNAME << endl <<
-                    "....##....#...#......\t" ver << endl <<
-                    "....#.#...#...#......\tBy NachosTeam" << endl <<
-                    "....#..#..#...#......\t2024" << endl <<
-                    "....#...#.#...#......" << endl <<
-                    "....#....##...#......\thttps://github.com/nachosteam/nachos-console" << endl <<
-                    "....#.....#...#......" << endl <<
-                    "...................." << endl;
+            cout << ".................." << endl <<
+                    "..#.....#..######.\t" CNAME << endl <<
+                    "..##....#....#....\t" ver << endl <<
+                    "..#.#...#....#....\tBy NachosTeam" << endl <<
+                    "..#..#..#....#....\t2024" << endl <<
+                    "..#...#.#....#...." << endl <<
+                    "..#....##....#....\thttps://github.com/nachosteam/nachos-console" << endl <<
+                    "..#.....#....#...." << endl <<
+                    ".................." << endl;
 		}
         else if(term_input == "exit")
             return 0;
@@ -127,6 +128,14 @@ int main()
 			string dir_cmd = DIR_COMM + parameter;
 			system(dir_cmd.c_str());
 		}
+		/*else if (term_input == "test")
+		{
+			const char* str = "Привет, Hello";
+			string str2 = "Привет, Hello";
+			cout << str << endl;
+			cout << str2 << endl;
+			cout << "Проверка отображения кириллицы" << endl;
+		}*/
 		else
 		{
 			if (filesystem::exists(PATH_TO_PROG))
@@ -136,6 +145,8 @@ int main()
 			}
 			else if (term_input != "")
 				cout << "Unknown command: " << term_input << endl;
+				cout << "PATH_TO_PROG: "<< PATH_TO_PROG << endl;
+				cout << "PROG_FULL: " << PROG_FULL << endl;
 		}
     }
 }
