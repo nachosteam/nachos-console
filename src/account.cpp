@@ -97,7 +97,7 @@ void create_file()
 
 void login()
 {
-	if (!std::filesystem::exists("./settings.json") & !std::filesystem::exists("./password"))
+	if (!std::filesystem::exists("./settings.json") or !std::filesystem::exists("./password"))
 	{
 		create_file();
 		new_login();
