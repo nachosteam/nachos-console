@@ -146,20 +146,20 @@ int main()
 		}
 		/*else if (term_input == "test")
 		{
-			const char* str = "Привет, Hello";
-			string str2 = "Привет, Hello";
+			const char* str = "РџСЂРёРІРµС‚, Hello";
+			string str2 = "РџСЂРёРІРµС‚, Hello";
 			cout << str << endl;
 			cout << str2 << endl;
-			cout << "Проверка отображения кириллицы" << endl;
+			cout << "РџСЂРѕРІРµСЂРєР° РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РєРёСЂРёР»Р»РёС†С‹" << endl;
 		}
-		else if (term_input == "кириллица")
+		else if (term_input == "РєРёСЂРёР»Р»РёС†Р°")
 		{
-			const char* str = "Привет, Hello";
-			string str2 = "Привет, Hello";
+			const char* str = "РџСЂРёРІРµС‚, Hello";
+			string str2 = "РџСЂРёРІРµС‚, Hello";
 			cout << str << endl;
 			cout << str2 << endl;
-			printf("Проверка отображения кириллицы\n");
-		}*/ //this shit is crashing, 'test' doesn't output russian text, 'кириллица' crashs because filesystem error - illegal symbols
+			printf("РџСЂРѕРІРµСЂРєР° РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РєРёСЂРёР»Р»РёС†С‹\n");
+		}*/ //this shit is crashing, 'test' doesn't output russian text, 'РєРёСЂРёР»Р»РёС†Р°' crashs because filesystem error - illegal symbols
 		else
 		{
 			if (filesystem::exists(PATH_TO_PROG))
