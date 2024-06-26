@@ -12,7 +12,7 @@
 #include "other_comms.hpp"
 
 #define CNAME "NachosConsole"
-#define ver "1.1.62"
+#define ver "1.1.63"
 #ifdef _WIN32
 	#include <windows.h>
 	#define DIR_COMM "dir "
@@ -20,19 +20,25 @@
 	#define PATH_TO_PROG "pkg\\" + term_input + ".exe"
 	#define PROG_FULL "pkg\\" + fullcom
 	#define WIN_UTF8 SetConsoleOutputCP(CP_UTF8)
-#elif __unix__
+	#ifdef _WIN32 and _WIN64
+		#define HOST_OS " for Win64"
+	#else
+		#define HOST_OS " for Win32"
+	#endif
+#elif __unix__ or __linux__
 	#define DIR_COMM "ls "
 	#define CLEAR_COMM "clear"
 	#define PATH_TO_PROG "pkg/" + term_input
 	#define PROG_FULL "pkg/" + fullcom
-	#define WIN_UTF8 cout << endl
+	#define WIN_UTF8 cout << ""
+	#define HOST_OS " for Linux"
 #endif
 using namespace std;
 using json = nlohmann::json;
 
 int main()
 {
-	setlocale(LC_ALL, "en_US.UTF-8");
+	setlocale(LC_ALL, "en_US.utf8");
 	WIN_UTF8;
 	if (!filesystem::exists("./pkg"))
 		system("mkdir pkg");
@@ -72,7 +78,7 @@ int main()
         else if(term_input == "about")
         {
             cout << ".................." << endl <<
-                    "..#.....#..######.\t" CNAME << endl <<
+                    "..#.....#..######.\t" CNAME << HOST_OS << endl <<
                     "..##....#....#....\t" ver << endl <<
                     "..#.#...#....#....\tBy NachosTeam" << endl <<
                     "..#..#..#....#....\t2024" << endl <<
@@ -145,7 +151,15 @@ int main()
 			cout << str << endl;
 			cout << str2 << endl;
 			cout << "Проверка отображения кириллицы" << endl;
-		}*/
+		}
+		else if (term_input == "кириллица")
+		{
+			const char* str = "Привет, Hello";
+			string str2 = "Привет, Hello";
+			cout << str << endl;
+			cout << str2 << endl;
+			printf("Проверка отображения кириллицы\n");
+		}*/ //this shit is crashing, 'test' doesn't output russian text, 'кириллица' crashs because filesystem error - illegal symbols
 		else
 		{
 			if (filesystem::exists(PATH_TO_PROG))
