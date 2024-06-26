@@ -5,6 +5,7 @@
 #include <sstream>
 #include <functional>
 #include "json.hpp"
+#include "sha256.h"
 #ifdef _WIN32
 	#define CLEAR_COMM "cls"
 #elif __unix__
@@ -32,8 +33,7 @@ void new_password()
 	std::string pass_new;
 	std::cout << "\t|Password: ";
 	std::getline(std::cin, pass_new);
-	std::hash<std::string> hasher;
-	std::size_t hashValue = hasher(pass_new);
+	std::string hashValue = SHA256::hashString(pass_new);
 	std::ofstream out;
     out.open("password");
     if (out.is_open())
@@ -127,14 +127,11 @@ void login()
 			std::cout << "\t|password: ";
 			std::getline(std::cin, passwd_back);
 			std::ifstream i("password");
-			std::hash<std::string> hasher;
-			std::size_t hashValue = hasher(passwd_back);
+			std::string hashValue = SHA256::hashString(passwd_back);
 			std::string passwd_exists;
-			std::ifstream in("password");
-			std::getline(in, passwd_exists);
-			in.close();
+			std::getline(i, passwd_exists);
 			i.close();
-			if (std::to_string(hashValue) == passwd_exists)
+			if (hashValue == passwd_exists)
 				break;
 			else
 				std::cout << "Incorrect password. Try again." << std::endl;

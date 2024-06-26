@@ -9,7 +9,7 @@
 void passwd_change()
 {
 	std::string new_passwd;
-    std::cout << "Enter a new password: " << std::endl;
+    std::cout << "Enter a new password: ";
     std::getline(std::cin, new_passwd);
     std::hash<std::string> hasher;
 	std::size_t hashValue = hasher(new_passwd);
@@ -17,7 +17,7 @@ void passwd_change()
 	out.open("password");
 	if (out.is_open())
 	{
-		out << hashValue << std::endl;
+		out << hashValue;
 	}
 	out.close();
 }

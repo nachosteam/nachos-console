@@ -5,6 +5,7 @@
 #include <sstream>
 #include <functional>
 #include "json.hpp"
+#include "sha256.h"
 #ifdef _WIN32
 	#define PATH_TO_PKG "./pkg/" + action + ".exe"
 	#define DEL_EXE "del .\\pkg\\" + action + ".exe"
@@ -21,14 +22,11 @@ void del_pkg(std::string action)
 	std::cout << "\t|password: ";
 	std::getline(std::cin, passwd_back);
 	std::ifstream i("password");
-	std::hash<std::string> hasher;
-	std::size_t hashValue = hasher(passwd_back);
 	std::string passwd_exists;
-	std::ifstream in("password");
-	std::getline(in, passwd_exists);
-	in.close();
+	std::getline(i, passwd_exists);
+	std::string pb_hash = SHA256::hashString(passwd_back);
 	i.close();
-	if (std::to_string(hashValue) == passwd_exists)
+	if (pb_hash == passwd_exists)
 	{
     	std::ifstream file(PATH_TO_PKG);
 		if (file)

@@ -6,6 +6,7 @@
 #include <functional>
 #include <locale>
 #include "json.hpp"
+#include "sha256.h"
 #include "repo.hpp"
 #include "account.hpp"
 #include "pkg-del.hpp"
@@ -101,18 +102,15 @@ int main()
 			{
 				iss >> action;
 				
-				std::string passwd_back;
-				std::cout << "\t|password: ";
-				std::getline(std::cin, passwd_back);
-				std::ifstream i("password");
-				std::hash<std::string> hasher;
-				std::size_t hashValue = hasher(passwd_back);
-				std::string passwd_exists;
-				std::ifstream in("password");
-				std::getline(in, passwd_exists);
-				in.close();
+				string passwd_back;
+				cout << "\t|password: ";
+				getline(std::cin, passwd_back);
+				ifstream i("password");
+				string passwd_exists;
+				getline(i, passwd_exists);
+				string pb_hash = SHA256::hashString(passwd_back);
 				i.close();
-				if (to_string(hashValue) == passwd_exists)
+				if (pb_hash == passwd_exists)
 				{
 					repos.downloadPackage(action);
 				}
@@ -142,9 +140,11 @@ int main()
 		}
 		else if (term_input == "echo")
 		{
-			system(fullcom.c_str());
+			string echo = fullcom;
+			system(echo.c_str());
+			cout << echo << endl << fullcom << endl;
 		}
-		/*else if (term_input == "test")
+		else if (term_input == "test")
 		{
 			const char* str = "Привет, Hello";
 			string str2 = "Привет, Hello";
@@ -159,7 +159,9 @@ int main()
 			cout << str << endl;
 			cout << str2 << endl;
 			printf("Проверка отображения кириллицы\n");
-		}*/ //this shit is crashing, 'test' doesn't output russian text, 'кириллица' crashs because filesystem error - illegal symbols
+		}
+		//this shit is crashing, 'test' doesn't output russian text, 'кириллица' crashs because filesystem error - illegal symbols
+		//edited: 'test' is correctly output russian text, code has been converted from Windows-1251 to UTF-8(wtf code was in Windows-1251?), left problem with input on Cirillic (filesystem error - illegal symbols) 
 		else
 		{
 			if (filesystem::exists(PATH_TO_PROG))
