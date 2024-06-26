@@ -3,7 +3,7 @@ the another console on C++
 
 # Requirements
 ### OS:
-- Windows version higher 8.1 (you can try to run on lower versions, but you will encounter problems, such as curl being missing and some commands not displaying correctly)
+- Windows version higher 8.1 (you can try to run on lower versions, but you will encounter problems, such as curl being missing)
 - Linux
 
 # HOW 2 COMPILE
