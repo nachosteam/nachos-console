@@ -7,6 +7,7 @@ set(SOURCE_FILES src/main.cpp
                  src/repo.cpp
                  src/account.cpp
                  src/pkg-del.cpp
-                 src/other_comms.cpp)
+                 src/other_comms.cpp
+                 src/sha256.c)
 
 add_executable(nachos-console ${SOURCE_FILES})
