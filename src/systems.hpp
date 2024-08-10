@@ -32,7 +32,7 @@
 #define CNAME "NachosConsole"
 #define ver "2.0.3"
 #ifdef _WIN32
-	#ifdef _WIN32 && _WIN64
+	#if defined(_WIN32) && defined(_WIN64)
 		#define HOST_OS " for Win64"
 	#else
 		#define HOST_OS " for Win32"

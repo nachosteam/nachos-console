@@ -31,9 +31,7 @@
 #include <locale>
 #include "json.hpp"
 #include "sha256.h"
-#include "repo.hpp"
 #include "account.hpp"
-#include "pkg-del.hpp"
 #include "systems.hpp"
 
 #define CNAME "NachosConsole"
@@ -44,7 +42,7 @@
 	#define PATH_TO_PROG "pkg\\" + term_input + ".exe"
 	#define PROG_FULL "pkg\\" + fullcom
 	#define WIN_UTF8 SetConsoleOutputCP(CP_UTF8)
-	#ifdef _WIN32 && _WIN64
+	#if defined(_WIN32) && defined(_WIN64)
 		#define HOST_OS " for Win64"
 	#else
 		#define HOST_OS " for Win32"
@@ -69,7 +67,7 @@ int main()
 	login();
 	clear();
 
-	Repo repos("./settings.json");
+	/*Repo repos("./settings.json");*/
 	
 	string action;
 	filesystem::path currentDir = filesystem::current_path();
