@@ -1,3 +1,27 @@
+/*
+	MIT License
+
+	Copyright (c) 2024 NachosTeam https://github.com/nachosteam
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,25 +34,23 @@
 #include "repo.hpp"
 #include "account.hpp"
 #include "pkg-del.hpp"
-#include "other_comms.hpp"
+#include "systems.hpp"
 
 #define CNAME "NachosConsole"
-#define ver "1.1.63"
+//#define ver "2.0.3"
 #ifdef _WIN32
 	#include <windows.h>
 	#define DIR_COMM "dir "
-	#define CLEAR_COMM "cls"
 	#define PATH_TO_PROG "pkg\\" + term_input + ".exe"
 	#define PROG_FULL "pkg\\" + fullcom
 	#define WIN_UTF8 SetConsoleOutputCP(CP_UTF8)
-	#ifdef _WIN32 and _WIN64
+	#ifdef _WIN32 && _WIN64
 		#define HOST_OS " for Win64"
 	#else
 		#define HOST_OS " for Win32"
 	#endif
-#elif __unix__ or __linux__
+#elif __linux__
 	#define DIR_COMM "ls "
-	#define CLEAR_COMM "clear"
 	#define PATH_TO_PROG "pkg/" + term_input
 	#define PROG_FULL "pkg/" + fullcom
 	#define WIN_UTF8 cout << ""
@@ -41,11 +63,11 @@ int main()
 {
 	setlocale(LC_ALL, "en_US.utf8");
 	WIN_UTF8;
-	if (!filesystem::exists("./pkg"))
-		system("mkdir pkg");
+	/*if (!filesystem::exists("./pkg"))
+		system("mkdir pkg");*/
 	
 	login();
-	system(CLEAR_COMM);
+	clear();
 
 	Repo repos("./settings.json");
 	
@@ -67,34 +89,28 @@ int main()
 		iss >> term_input;
         if(term_input == "help")
         {
-            cout << "about						about " CNAME << endl <<
-            "passwd						change in-app password" << endl <<
-            "clear						clear console" << endl <<
-			"pkg [parameter] [package]			get/remove pkg" << endl <<
-			"ls						shows the contents of the directory" << endl <<
-			"echo						displays messages" << endl <<
-			"exit						close " CNAME << endl;
-            cout << endl;
+			help_com("default");
         }
         else if(term_input == "about")
         {
-            cout << ".................." << endl <<
+			about();
+            /*cout << ".................." << endl <<
                     "..#.....#..######.\t" CNAME << HOST_OS << endl <<
                     "..##....#....#....\t" ver << endl <<
-                    "..#.#...#....#....\tBy NachosTeam" << endl <<
-                    "..#..#..#....#....\t2024" << endl <<
+                    "..#.#...#....#....\tBy \x1B[33mNachosTeam\033[0m 2024" << endl <<
+                    "..#..#..#....#....\thttps://github.com/nachosteam/nachos-console" << endl <<
                     "..#...#.#....#...." << endl <<
-                    "..#....##....#....\thttps://github.com/nachosteam/nachos-console" << endl <<
+                    "..#....##....#....\t\x1B[36mUnder MIT License\033[0m" << endl <<
                     "..#.....#....#...." << endl <<
-                    ".................." << endl;
+                    ".................." << endl;*/
 		}
         else if(term_input == "exit")
             return 0;
         else if(term_input == "passwd")
 			passwd_change();
-        else if(term_input == "clear")
-			system(CLEAR_COMM);
-		else if (term_input == "pkg")
+        else if(term_input == "clear" or term_input == "cls")
+			clear();
+		/*else if (term_input == "pkg")
 		{
 			iss >> parameter;
         
@@ -104,12 +120,12 @@ int main()
 				
 				string passwd_back;
 				cout << "\t|password: ";
-				getline(std::cin, passwd_back);
-				ifstream i("password");
-				string passwd_exists;
-				getline(i, passwd_exists);
+				getline(cin, passwd_back);
+				ifstream i ("settings.json");
+				json data;
+				i >> data;
+				string passwd_exists = data["password"];
 				string pb_hash = SHA256::hashString(passwd_back);
-				i.close();
 				if (pb_hash == passwd_exists)
 				{
 					repos.downloadPackage(action);
@@ -123,28 +139,20 @@ int main()
 				del_pkg(action);
 			}
 			else if (parameter == "-h" or parameter == "--help")
-			{
-				iss >> action;
-				cout << "-h|--help\tget list of avalible parameters" << endl
-				<< "-s|--sync\tsync pkg" << endl
-				<< "-r|--remove\tremove pkg" << endl;
-			}
+				help_com("pkg");
 			else
 				cout << "Unknown parameter. Type 'pkg --help'" << endl;
-		}
-		else if (term_input == "ls")
+		}*/
+		else if (term_input == "ls" or term_input == "dir")
 		{
 			iss >> parameter;
 			string dir_cmd = DIR_COMM + parameter;
 			system(dir_cmd.c_str());
 		}
 		else if (term_input == "echo")
-		{
-			string echo = fullcom;
-			system(echo.c_str());
-			cout << echo << endl << fullcom << endl;
-		}
-		else if (term_input == "test")
+			system(fullcom.c_str());
+			//this command correctrly display only english text
+		/*else if (term_input == "test")
 		{
 			const char* str = "Привет, Hello";
 			string str2 = "Привет, Hello";
@@ -159,18 +167,28 @@ int main()
 			cout << str << endl;
 			cout << str2 << endl;
 			printf("Проверка отображения кириллицы\n");
+		}*/
+		//this shit is crashing, 'test' doesn't output russian text, 'кириллица' crashs because filesystem error
+		//edited: 'test' is correctly output russian text, code has been converted from Windows-1251 to UTF-8(wtf code was in Windows-1251?), left problem with input on Cirillic (filesystem error) 
+		/*else if (term_input == "test")
+		{
+			cout << "\x1B[36mTexting\033[0m" << endl;
+		}*/
+		else if (term_input == "SuperMegaAsFuckAdminPanelForEnablingSomething")
+		{
+			iss >> parameter;
+			iss >> action;
+			adminPanel(parameter, action);
 		}
-		//this shit is crashing, 'test' doesn't output russian text, 'кириллица' crashs because filesystem error - illegal symbols
-		//edited: 'test' is correctly output russian text, code has been converted from Windows-1251 to UTF-8(wtf code was in Windows-1251?), left problem with input on Cirillic (filesystem error - illegal symbols) 
 		else
 		{
-			if (filesystem::exists(PATH_TO_PROG))
+			/*if (filesystem::exists(PATH_TO_PROG))
 			{
 				string app_launch = PROG_FULL;
 				system(app_launch.c_str());
 			}
-			else if (term_input != "")
-				cout << "Unknown command: " << term_input << endl;
+			else if (term_input != "")*/
+			cout << "Unknown command: " << term_input << endl;
 		}
     }
 }
