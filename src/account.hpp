@@ -44,11 +44,11 @@ void new_login()
 	std::string login_new;
 	std::cout << "\t|Login: ";
 	std::getline(std::cin, login_new);
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data;
 	i >> data;
 	data["username"] = login_new;
-	std::ofstream output("settings.json");
+	std::ofstream output("nc-bin/settings.json");
 	output << data.dump(4);
 }
 
@@ -58,11 +58,11 @@ void new_password()
 	std::cout << "\t|Password: ";
 	std::getline(std::cin, pass_new);
 	std::string hashValue = SHA256::hashString(pass_new);
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data;
 	i >> data;
 	data["password"] = hashValue;
-	std::ofstream output("settings.json");
+	std::ofstream output("nc-bin/settings.json");
 	output << data.dump(4);
 }
 
@@ -71,18 +71,18 @@ void new_pcname()
 	std::string pc_new;
 	std::cout << "\t|PC name: ";
 	std::getline(std::cin, pc_new);
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data;
 	i >> data;
 	data["pcname"] = pc_new;
-	std::ofstream output("settings.json");
+	std::ofstream output("nc-bin/settings.json");
 	output << data.dump(4);
 }
 
 std::string user()
 {
 	std::string username;
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data = nlohmann::json::parse(i);
 	std::string userFromFile = data["username"];
 	username = userFromFile;
@@ -93,7 +93,7 @@ std::string user()
 std::string pcname()
 {
 	std::string pc_name;
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data = nlohmann::json::parse(i);
 	std::string pcFromFile = data["pcname"];
 	pc_name = pcFromFile;
@@ -101,20 +101,69 @@ std::string pcname()
 	return pc_name;
 }
 
+std::string workdir() {
+	std::filesystem::path dirWhere = std::filesystem::current_path();
+	return dirWhere.string();
+}
+
+/*
+'prompt' Format:
+    \\u - Username
+    \\p - Pc name
+    \\w - Path to work dir
+*/
+std::string prompt() {
+	std::ifstream i("nc-bin/settings.json");
+	nlohmann::json data = nlohmann::json::parse(i);
+	
+	std::string out{};
+	std::string format = data["prompt"];
+
+	bool isFuckingBullshit = false;
+	for (char ch : format) {
+		if (ch == '/') {
+			isFuckingBullshit = !isFuckingBullshit;
+			continue;
+		}
+		if (isFuckingBullshit) {
+			switch (ch) {
+				case 'u': out += user(); break;
+				case 'w': out += workdir(); break;
+				case 'p': out += pcname(); break;
+				default:
+					std::cerr << "Error: Unknown special character for formatting!" << std::endl;
+					exit(42);
+			}
+			isFuckingBullshit = false;
+		} else
+			out += ch;
+	}
+
+	i.close();
+	return out;
+}
+
 void create_file()
 {
+	std::string mkdir_bin = "mkdir nc-bin";
+	system(mkdir_bin.c_str());
 	std::ofstream out;
-    out.open("settings.json");
+    out.open("nc-bin/settings.json");
     if (out.is_open())
     {
-        out << "{" << std::endl << "\t\"username\": \"null\"," << std::endl << "\t\"pcname\": \"pc\"," << std::endl << "\t\"password\": \"root\"," << std::endl << "\t\"repos\": [\"https://raw.githubusercontent.com/nachosteam/nc-repo\"]," << std::endl << "\t\"tegvdTsv56376\": \"placeholder :D\"" << std::endl << "}";
+        out << "{" << std::endl << "\t\"username\": \"null\","
+				   << std::endl << "\t\"pcname\": \"pc\"," 
+				   << std::endl << "\t\"password\": \"root\"," 
+				   << std::endl << "\t\"repos\": [\"https://raw.githubusercontent.com/nachosteam/nc-repo\"]," 
+				   << std::endl << "\t\"tegvdTsv56376\": \"placeholder :D\"," 
+				   << std::endl << "\t\"prompt\": \"/u@/p [/w]$ \"" << std::endl << "}";
 		out.close();
     }
 }
 
 void login()
 {
-	if (!std::filesystem::exists("./settings.json")) /* or !std::filesystem::exists("./password"))*/
+	if (!std::filesystem::exists("nc-bin/settings.json")) /* or !std::filesystem::exists("./password"))*/
 	{
 		create_file();
 		new_login();
@@ -128,7 +177,7 @@ void login()
 		{
 			std::cout << "\t|login: ";
 			std::getline(std::cin, login_back);
-			std::ifstream i ("settings.json");
+			std::ifstream i ("nc-bin/settings.json");
 			nlohmann::json data;
 			i >> data;
 			std::string login_exists = data["username"];
@@ -143,7 +192,7 @@ void login()
 			std::string passwd_back;
 			std::cout << "\t|password: ";
 			std::getline(std::cin, passwd_back);
-			std::ifstream i ("settings.json");
+			std::ifstream i ("nc-bin/settings.json");
 			nlohmann::json data;
 			i >> data;
 			std::string passwd_exists = data["password"];

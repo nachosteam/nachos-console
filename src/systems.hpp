@@ -30,7 +30,7 @@
 #include "json.hpp"
 #include "account.hpp"
 #define CNAME "NachosConsole"
-#define ver "2.0.3"
+#define ver "2.1.0"
 #ifdef _WIN32
 	#if defined(_WIN32) && defined(_WIN64)
 		#define HOST_OS " for Win64"
@@ -47,11 +47,11 @@ void passwd_change()
     std::cout << "Enter a new password: ";
 	std::getline(std::cin, new_passwd);
 	std::string hashValue = SHA256::hashString(new_passwd);
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data;
 	i >> data;
 	data["password"] = hashValue;
-	std::ofstream output("settings.json");
+	std::ofstream output("nc-bin/settings.json");
 	output << data.dump(4);
 }
 
@@ -87,7 +87,7 @@ void clear()
 
 void about()
 {
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data;
 	i >> data;
 	if (data["tegvdTsv56376"] == "eb699c583c2aba362d3def8346d55620dcf000d37a6dafdb7af663383d169841")
@@ -118,7 +118,7 @@ void about()
 
 void adminPanel(std::string parameter, std::string action)
 {
-	std::ifstream i("settings.json");
+	std::ifstream i("nc-bin/settings.json");
 	nlohmann::json data;
 	i >> data;
 	if (parameter == "on")
@@ -126,7 +126,7 @@ void adminPanel(std::string parameter, std::string action)
 		if (action == "AboutEasterEgg")
 		{
 			data["tegvdTsv56376"] = SHA256::hashString("CatActivated");
-			std::ofstream output("settings.json");
+			std::ofstream output("nc-bin/settings.json");
 			output << data.dump(4);
 			std::cout << "Easter Egg Activated" << std::endl;
 		}
@@ -136,7 +136,7 @@ void adminPanel(std::string parameter, std::string action)
 		if (action == "AboutEasterEgg")
 		{
 			data["tegvdTsv56376"] = "placeholder :D";
-			std::ofstream output("settings.json");
+			std::ofstream output("nc-bin/settings.json");
 			output << data.dump(4);
 			std::cout << "Easter Egg Deactivated" << std::endl;
 		}
