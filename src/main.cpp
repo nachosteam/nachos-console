@@ -35,11 +35,11 @@
 #include "systems.hpp"
 
 #define CNAME "NachosConsole"
+#define ver "2.1.1"
 #ifdef _WIN32
 	#include <windows.h>
 	#define DIR_COMM "dir "
 	#define PATH_TO_PROG "nc-bin\\" + term_input
-	#define PROG_FULL "nc-bin\\" + term_input + fullcom
 	#define WIN_UTF8 SetConsoleOutputCP(CP_UTF8)
 	#if defined(_WIN32) && defined(_WIN64)
 		#define HOST_OS " for Win64"
@@ -51,7 +51,6 @@
 	#include <unistd.h>
 	#define DIR_COMM "ls "
 	#define PATH_TO_PROG "nc-bin/" + term_input
-	#define PROG_FULL "nc-bin/" + term_input + fullcom
 	#define WIN_UTF8
 	#define HOST_OS " for Linux"
 #endif
@@ -65,8 +64,6 @@ int main()
 	
 	login();
 	clear();
-
-	/*Repo repos("./settings.json");*/
 	
 	string action;
 	filesystem::path currentDir = filesystem::current_path();
@@ -85,7 +82,17 @@ int main()
         if(term_input == "help")
 			help_com("default");
         else if(term_input == "about")
-			about();
+		{
+			std::cout << ".................." << std::endl <<
+				"..#.....#..######.\t" CNAME << HOST_OS << std::endl <<
+				"..##....#....#....\t" ver << std::endl <<
+				"..#.#...#....#....\tBy \x1B[33mNachosTeam\033[0m 2024" << std::endl <<
+				"..#..#..#....#....\thttps://github.com/nachosteam/nachos-console" << std::endl <<
+				"..#...#.#....#...." << std::endl <<
+				"..#....##....#....\t\x1B[36mUnder MIT License\033[0m" << std::endl <<
+				"..#.....#....#...." << std::endl <<
+				".................." << std::endl;
+		}
         else if(term_input == "exit")
 			exit(42);
         else if(term_input == "passwd")
@@ -100,19 +107,14 @@ int main()
 		}
 		else if (term_input == "echo")
 			system(fullcom.c_str());
-		else if (term_input == "SuperMegaAsFuckAdminPanelForEnablingSomething")
-		{
-			iss >> parameter;
-			iss >> action;
-			adminPanel(parameter, action);
-		}
 		else
 		{
 			if (!term_input.empty()) {
 				if (filesystem::exists(PATH_TO_PROG))
 				{
-					string app_launch = PROG_FULL;
-					system(app_launch.c_str());
+					run_pkg(term_input, fullcom);
+					/*string app_launch = PROG_FULL;
+					system(app_launch.c_str());*/
 				}
 				else
 					cout << "Unknown command: " << term_input << endl;

@@ -30,15 +30,12 @@
 #include "json.hpp"
 #include "account.hpp"
 #define CNAME "NachosConsole"
-#define ver "2.1.0"
 #ifdef _WIN32
-	#if defined(_WIN32) && defined(_WIN64)
-		#define HOST_OS " for Win64"
-	#else
-		#define HOST_OS " for Win32"
-	#endif
+	#define PROG_FULL "nc-bin\\" + term_input + "\\" + fullcom
+	#define PKG_DIR "nc-bin\\" + term_input + "\\"
 #elif __linux__
-	#define HOST_OS " for Linux"
+	#define PROG_FULL "nc-bin/" + term_input + "/" + fullcom
+	#define PKG_DIR "nc-bin/" + term_input + "/"
 #endif
 
 void passwd_change()
@@ -85,60 +82,14 @@ void clear()
 	#endif
 }
 
-void about()
+void run_pkg(std::string term_input, std::string fullcom)
 {
-	std::ifstream i("nc-bin/settings.json");
-	nlohmann::json data;
-	i >> data;
-	if (data["tegvdTsv56376"] == "eb699c583c2aba362d3def8346d55620dcf000d37a6dafdb7af663383d169841")
-	{
-		std::cout << ".................." << std::endl <<
-					 "\x1B[47;30mo^•.•^o\033[0m " CNAME << std::endl <<
-					 ver << std::endl <<
-					 "with \x1B[91mlove\033[0m by NachosTeam" << std::endl <<
-					 "Developers:" << std::endl <<
-					 "\x1B[91mNikita Belov (https://github.com/TolyaGosuslugi)\033[0m" << std::endl <<
-					 "\x1B[91mhonakac (https://github.com/honakac)\033[0m" << std::endl <<
-					 "For: " << user() << std::endl <<
-					 "Thanks for using " CNAME << "! meow :3" << std::endl << std::endl;
-	}
-	else
-	{
-		std::cout << ".................." << std::endl <<
-				"..#.....#..######.\t" CNAME << HOST_OS << std::endl <<
-				"..##....#....#....\t" ver << std::endl <<
-				"..#.#...#....#....\tBy \x1B[33mNachosTeam\033[0m 2024" << std::endl <<
-				"..#..#..#....#....\thttps://github.com/nachosteam/nachos-console" << std::endl <<
-				"..#...#.#....#...." << std::endl <<
-				"..#....##....#....\t\x1B[36mUnder MIT License\033[0m" << std::endl <<
-				"..#.....#....#...." << std::endl <<
-				".................." << std::endl;
-	}
-}
-
-void adminPanel(std::string parameter, std::string action)
-{
-	std::ifstream i("nc-bin/settings.json");
-	nlohmann::json data;
-	i >> data;
-	if (parameter == "on")
-	{
-		if (action == "AboutEasterEgg")
-		{
-			data["tegvdTsv56376"] = SHA256::hashString("CatActivated");
-			std::ofstream output("nc-bin/settings.json");
-			output << data.dump(4);
-			std::cout << "Easter Egg Activated" << std::endl;
-		}
-	}
-	else if (parameter == "off")
-	{
-		if (action == "AboutEasterEgg")
-		{
-			data["tegvdTsv56376"] = "placeholder :D";
-			std::ofstream output("nc-bin/settings.json");
-			output << data.dump(4);
-			std::cout << "Easter Egg Deactivated" << std::endl;
-		}
-	}
+	std::ifstream i("nc-bin/" + term_input + "/info.json");
+	nlohmann::json data = nlohmann::json::parse(i);
+	std::string execute = data["execute"];
+	std::string args = data["args"];
+	std::string start = PKG_DIR + execute;
+	system(start.c_str());
+	/*std::string app_launch = PROG_FULL;
+	system(app_launch.c_str());*/
 }
