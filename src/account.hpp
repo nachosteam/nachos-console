@@ -155,7 +155,6 @@ void create_file()
 				   << std::endl << "\t\"pcname\": \"pc\"," 
 				   << std::endl << "\t\"password\": \"root\"," 
 				   << std::endl << "\t\"repos\": [\"https://raw.githubusercontent.com/nachosteam/nc-repo\"]," 
-				   << std::endl << "\t\"tegvdTsv56376\": \"placeholder :D\"," 
 				   << std::endl << "\t\"prompt\": \"/u@/p [/w]$ \"" << std::endl << "}";
 		out.close();
     }

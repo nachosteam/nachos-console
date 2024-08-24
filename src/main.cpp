@@ -109,7 +109,8 @@ int main()
 			system(fullcom.c_str());
 		else
 		{
-			if (!term_input.empty()) {
+			if (!term_input.empty())
+			{
 				if (filesystem::exists(PATH_TO_PROG))
 				{
 					run_pkg(term_input, fullcom);
