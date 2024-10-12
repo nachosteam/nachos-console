@@ -1,5 +1,5 @@
 # Nachos Console
-the another console on C++
+just a simple console on C++
 
 # Requirements
 ### Supported OS:
