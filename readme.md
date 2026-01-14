@@ -19,3 +19,4 @@ cd nachos-console
 cmake .
 make
 ```
+.
