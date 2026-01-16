@@ -26,10 +26,6 @@ func main() {
 
 		fmt.Printf("\n---------\nfull: %s\nfirst word: %s\nparams: %v\n---------\n", fullComm, comm, params)
 
-		// for _, j := range params[1:4] {
-		// 	fmt.Printf("PACKET %s\n", j)
-		// }
-
 		switch comm {
 		case "help":
 			fmt.Printf("")
@@ -44,6 +40,8 @@ func main() {
 ..#.....#....#....
 ..................
 `, NAME, VER, color.YellowString("NachosTeam"), color.CyanString("Under MIT License"))
+		case "":
+			continue
 
 		default:
 			fmt.Printf("ээ тi чо ахуел '%s'\n", fullComm)
