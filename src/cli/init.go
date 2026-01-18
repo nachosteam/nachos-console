@@ -7,11 +7,20 @@ import (
 )
 
 const (
-	folder string = "nc-bin"
+	folder string = "./nc-bin"
 	file   string = folder + "/cfg.json"
+
+	test int = 0
 )
 
 func Init() {
+	if test == 1 {
+		errRm := os.RemoveAll(folder)
+		if errRm != nil {
+			panic(errRm)
+		}
+	}
+
 	cfg, err := os.Open(file)
 	if err != nil {
 		if os.IsNotExist(err) {

@@ -28,6 +28,8 @@ func Register(file string) {
 	passHash := sha256.Sum256([]byte(pass))
 	m["pass"] = hex.EncodeToString(passHash[:])
 
+	m["pc"] = "pc"
+
 	cfgJson, err := json.Marshal(m)
 	if err != nil {
 		panic(err)

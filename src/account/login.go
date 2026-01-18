@@ -43,5 +43,5 @@ func Login(file string) {
 	}
 
 	user.Name = username
-	user.Pc = "pc"
+	user.Pc = m["pc"].(string)
 }
