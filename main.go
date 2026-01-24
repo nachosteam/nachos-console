@@ -4,9 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 
 	"nc/src/cli"
+	"nc/src/cmds"
 	"nc/src/pkg"
 	"nc/src/user"
 
@@ -35,10 +37,27 @@ func main() {
 		switch comm {
 		case "":
 			continue
+		// case "взломать": //NachosConsole 0.5 (cpp)
+		// 	if params[0] == "анчоуса" && params[1] == "локалхост" && params[2] == "123" {
+		// 		fmt.Println("взлом...")
+		// 		time.Sleep(2 * time.Second)
+		// 		fmt.Println("localhost ping")
+		// 		time.Sleep(500 * time.Millisecond)
+		// 		for i := 0; i < 7; i++ {
+		// 			fmt.Println("wget localhost(pkg version 1.4.88) https://127.666.69.69	krasnieglaza ms(0 pkg)")
+		// 			time.Sleep(800 * time.Millisecond)
+		// 		}
+		// 		time.Sleep(4 * time.Second)
+		// 		fmt.Println("downloading C:\\*")
+		// 		time.Sleep(3 * time.Second)
+		// 		fmt.Println("failed pizdec :c")
+		// 	}
 		case "help":
 			fmt.Printf("help   display command list\n" +
 				"about  display program version\n" +
+				"ls   displays the contents of a directory\n" +
 				"echo   display entered text\n" +
+				"clear   clears console\n" +
 				"pkg [parameter] [package]   manage program's packages\n" +
 				"exit   closes the program\n")
 		case "echo":
@@ -54,6 +73,16 @@ func main() {
 				"..#.....#....#....  %s\n"+
 				"..................\n",
 				NAME, VER, color.YellowString("NachosTeam"), "Golang Rewrite Preview", color.CyanString("Under MIT License"))
+		case "ls":
+			cmd := exec.Command(cmds.DIR, params...)
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			cmd.Run()
+		case "clear":
+			cmd := exec.Command(cmds.CLEAR)
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			cmd.Run()
 		case "pkg":
 			if len(params) >= 1 {
 				switch params[0] {
