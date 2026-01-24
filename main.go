@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
 	"strings"
 
 	"nc/src/cli"
@@ -74,15 +73,13 @@ func main() {
 				"..................\n",
 				NAME, VER, color.YellowString("NachosTeam"), "Golang Rewrite Preview", color.CyanString("Under MIT License"))
 		case "ls":
-			cmd := exec.Command(cmds.DIR, params...)
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			cmd.Run()
+			if len(params) > 0 {
+				cmds.ShowDir(params[0])
+			} else {
+				cmds.ShowDir(".")
+			}
 		case "clear":
-			cmd := exec.Command(cmds.CLEAR)
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			cmd.Run()
+			cmds.Clear()
 		case "pkg":
 			if len(params) >= 1 {
 				switch params[0] {

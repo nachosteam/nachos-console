@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"nc/src/account"
-	"nc/src/cmds"
 )
 
 const (
@@ -15,8 +14,6 @@ const (
 )
 
 func Init() {
-	cmds.Init()
-
 	if test == 1 {
 		errRm := os.RemoveAll(folder)
 		if errRm != nil {
