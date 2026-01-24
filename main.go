@@ -74,7 +74,7 @@ func main() {
 				NAME, VER, color.YellowString("NachosTeam"), "Golang Rewrite Preview", color.CyanString("Under MIT License"))
 		case "ls":
 			if len(params) > 0 {
-				cmds.ShowDir(params[0])
+				cmds.ShowDir(strings.Join(params, " "))
 			} else {
 				cmds.ShowDir(".")
 			}

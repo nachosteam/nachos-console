@@ -10,7 +10,7 @@ import (
 func ShowDir(dir string) {
 	entries, err := os.ReadDir(dir)
 	if err != nil {
-		panic(err)
+		fmt.Printf("%s", err)
 	}
 
 	for _, entry := range entries {
