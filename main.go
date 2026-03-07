@@ -69,9 +69,9 @@ func main() {
 				"..#..#..#....#....  https://github.com/nachosteam/nachos-console\n"+
 				"..#...#.#....#....\n"+
 				"..#....##....#....  %s\n"+
-				"..#.....#....#....  %s\n"+
+				"..#.....#....#....\n"+
 				"..................\n",
-				NAME, VER, color.YellowString("NachosTeam"), "Golang Rewrite Preview", color.CyanString("Under MIT License"))
+				NAME, VER, color.YellowString("NachosTeam"), color.CyanString("Under MIT License"))
 		case "ls":
 			if len(params) > 0 {
 				cmds.ShowDir(strings.Join(params, " "))

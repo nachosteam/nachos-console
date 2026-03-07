@@ -34,7 +34,7 @@ func Register(file string) {
 	if err != nil {
 		panic(err)
 	}
-	os.WriteFile(file, []byte(cfgJson), 0644)
+	os.WriteFile(file, []byte(cfgJson), 0755)
 
 	user.Name = name
 	user.Pc = "pc"

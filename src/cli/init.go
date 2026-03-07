@@ -24,7 +24,7 @@ func Init() {
 	cfg, err := os.Open(file)
 	if err != nil {
 		if os.IsNotExist(err) {
-			os.Mkdir(folder, 0644)
+			os.Mkdir(folder, 0755)
 			os.Create(file)
 			// err = os.WriteFile(cfg)
 			account.Register(file) //starts the registration process
