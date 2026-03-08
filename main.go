@@ -16,7 +16,7 @@ import (
 
 const (
 	NAME string = "Nachos Console"
-	VER  string = "1.0.0"
+	VER  string = "1.0.1"
 )
 
 func main() {
@@ -36,21 +36,6 @@ func main() {
 		switch comm {
 		case "":
 			continue
-		// case "взломать": //NachosConsole 0.5 (cpp)
-		// 	if params[0] == "анчоуса" && params[1] == "локалхост" && params[2] == "123" {
-		// 		fmt.Println("взлом...")
-		// 		time.Sleep(2 * time.Second)
-		// 		fmt.Println("localhost ping")
-		// 		time.Sleep(500 * time.Millisecond)
-		// 		for i := 0; i < 7; i++ {
-		// 			fmt.Println("wget localhost(pkg version 1.4.88) https://127.666.69.69	krasnieglaza ms(0 pkg)")
-		// 			time.Sleep(800 * time.Millisecond)
-		// 		}
-		// 		time.Sleep(4 * time.Second)
-		// 		fmt.Println("downloading C:\\*")
-		// 		time.Sleep(3 * time.Second)
-		// 		fmt.Println("failed pizdec :c")
-		// 	}
 		case "help":
 			fmt.Printf("help   display command list\n" +
 				"about  display program version\n" +
@@ -72,6 +57,8 @@ func main() {
 				"..#.....#....#....\n"+
 				"..................\n",
 				NAME, VER, color.YellowString("NachosTeam"), color.CyanString("Under MIT License"))
+		case "dir":
+			fallthrough
 		case "ls":
 			if len(params) > 0 {
 				cmds.ShowDir(strings.Join(params, " "))
@@ -86,8 +73,12 @@ func main() {
 				case "help":
 					fmt.Printf("pkg install [package(s)]   install package(s)\n" +
 						"pkg remove [package(s)]   remove package(s)\n")
+				case "i":
+					fallthrough
 				case "install":
 					pkg.Install(params[1:])
+				case "r":
+					fallthrough
 				case "remove":
 					pkg.Remove(params[1:])
 				default:

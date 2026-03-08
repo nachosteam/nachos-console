@@ -15,9 +15,9 @@ func ShowDir(dir string) {
 
 	for _, entry := range entries {
 		if entry.IsDir() {
-			fmt.Printf("%s\t", color.CyanString(entry.Name()))
+			fmt.Printf("%s   ", color.CyanString(entry.Name()))
 		} else {
-			fmt.Printf("%s\t", entry.Name())
+			fmt.Printf("%s   ", entry.Name())
 		}
 	}
 
