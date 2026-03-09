@@ -7,33 +7,33 @@ import (
 )
 
 const (
-	folder string = "./nc-bin"
-	file   string = folder + "/cfg.json"
+	Folder string = "./nc-bin"
+	File   string = Folder + "/cfg.json"
 
 	test int = 0
 )
 
 func Init() {
 	if test == 1 {
-		errRm := os.RemoveAll(folder)
+		errRm := os.RemoveAll(Folder)
 		if errRm != nil {
 			panic(errRm)
 		}
 	}
 
-	cfg, err := os.Open(file)
+	cfg, err := os.Open(File)
 	if err != nil {
 		if os.IsNotExist(err) {
-			os.Mkdir(folder, 0755)
-			os.Create(file)
+			os.Mkdir(Folder, 0755)
+			os.Create(File)
 			// err = os.WriteFile(cfg)
-			account.Register(file) //starts the registration process
+			account.Register(File) //starts the registration process
 
 		} else {
 			panic(err)
 		}
 	} else {
-		account.Login(file)
+		account.Login(File)
 	}
 	cfg.Close()
 }

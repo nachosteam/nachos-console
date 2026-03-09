@@ -30,6 +30,8 @@ func Register(file string) {
 
 	m["pc"] = "pc"
 
+	m["repo"] = "https://raw.githubusercontent.com/nachosteam/nc-repo/refs/heads/main"
+
 	cfgJson, err := json.Marshal(m)
 	if err != nil {
 		panic(err)
@@ -38,4 +40,5 @@ func Register(file string) {
 
 	user.Name = name
 	user.Pc = "pc"
+	user.Repo = "https://raw.githubusercontent.com/nachosteam/nc-repo/refs/heads/main"
 }

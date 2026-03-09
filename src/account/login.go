@@ -44,4 +44,5 @@ func Login(file string) {
 
 	user.Name = username
 	user.Pc = m["pc"].(string)
+	user.Repo = m["repo"].(string)
 }
