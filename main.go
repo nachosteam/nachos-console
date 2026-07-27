@@ -2,8 +2,10 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 
 	"nc/src/cli"
@@ -74,6 +76,7 @@ func main() {
 					fallthrough
 				case "help":
 					fmt.Printf("pkg install [package(s)]   install package(s)\n" +
+						"pkg update   update packages list\n" +
 						"pkg remove [package(s)]   remove package(s)\n")
 
 				case "u":
@@ -102,7 +105,32 @@ func main() {
 			return
 
 		default:
-			fmt.Printf("Unknown command: %q\n", comm)
+			if _, err := os.Stat(cli.Folder + "/" + comm); !os.IsNotExist(err) {
+				cfg, errCfg := os.ReadFile(cli.Folder + "/" + comm + "/package.json")
+				if errCfg != nil {
+					fmt.Println(errCfg)
+					return
+				}
+
+				m := make(map[string]interface{})
+				errJson := json.Unmarshal(cfg, &m)
+				if errJson != nil {
+					fmt.Println(errJson)
+					return
+				}
+
+				cmd := exec.Command(cli.Folder+"/"+comm+"/"+m["execute"].(string), params...)
+				cmd.Stdout = os.Stdout
+				cmd.Stderr = os.Stderr
+				cmd.Stdin = os.Stdin
+				err := cmd.Run()
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+			} else {
+				fmt.Printf("Unknown command: %q\n", comm)
+			}
 		}
 	}
 }
