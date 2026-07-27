@@ -70,17 +70,27 @@ func main() {
 		case "pkg":
 			if len(params) >= 1 {
 				switch params[0] {
+				case "h":
+					fallthrough
 				case "help":
 					fmt.Printf("pkg install [package(s)]   install package(s)\n" +
 						"pkg remove [package(s)]   remove package(s)\n")
+
+				case "u":
+					fallthrough
+				case "update":
+					pkg.Update()
+
 				case "i":
 					fallthrough
 				case "install":
 					pkg.Install(params[1:])
+
 				case "r":
 					fallthrough
 				case "remove":
 					pkg.Remove(params[1:])
+
 				default:
 					fmt.Printf("pkg: Unknown parameter: %q\nEnter \"pkg help\" to see available commands\n", params[0])
 				}
