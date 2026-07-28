@@ -18,7 +18,7 @@ import (
 
 const (
 	NAME string = "Nachos Console"
-	VER  string = "1.0.1"
+	VER  string = "1.0.0"
 )
 
 func main() {
@@ -132,7 +132,6 @@ func main() {
 				} else {
 					cmd = exec.Command(cli.Folder + "/" + comm + "/" + m["execute"].(string))
 				}
-				fmt.Println(cmd)
 				cmd.Stdout = os.Stdout
 				cmd.Stderr = os.Stderr
 				cmd.Stdin = os.Stdin

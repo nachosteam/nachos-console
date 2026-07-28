@@ -30,7 +30,8 @@ func Login(file string) {
 	username, _ := reader.ReadString('\n')
 	username = strings.TrimSpace(username)
 	if username != m["name"].(string) {
-		panic("User does not exist\n\n")
+		fmt.Println("User doesn't exists.")
+		os.Exit(1)
 	}
 
 	fmt.Printf("| Password: ")
@@ -39,7 +40,8 @@ func Login(file string) {
 	passHashTempBytes := sha256.Sum256([]byte(pass))
 	passHashTemp := hex.EncodeToString(passHashTempBytes[:])
 	if passHashTemp != m["pass"].(string) {
-		panic("Password is incorrect\n\n")
+		fmt.Println("Password is incorrect.")
+		os.Exit(1)
 	}
 
 	user.Name = username
