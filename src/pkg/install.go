@@ -74,6 +74,23 @@ func Install(pkgs []string) {
 			return
 		}
 
+		if sys.Os() != "windows" {
+			pkgInfo, errPkg := os.ReadFile(pkgFolder + "/package.json")
+			if errPkg != nil {
+				fmt.Println(errPkg)
+				return
+			}
+
+			m := make(map[string]interface{})
+			errJson := json.Unmarshal(pkgInfo, &m)
+			if errJson != nil {
+				fmt.Println(errJson)
+				return
+			}
+
+			os.Chmod(pkgFolder+"/"+m["executable"].(string), 0755)
+		}
+
 		fmt.Println("Package installed.")
 	}
 }
