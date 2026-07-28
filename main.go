@@ -119,7 +119,20 @@ func main() {
 					return
 				}
 
-				cmd := exec.Command(cli.Folder+"/"+comm+"/"+m["execute"].(string), params...)
+				// cmd := exec.Command(cli.Folder+"/"+comm+"/"+m["execute"].(string), params...)
+				// paramsRun := ""
+				// if len(params) != 0 {
+				// 	paramsRun = strings.Join(params, " ")
+				// }
+				// cmd := exec.Command(cli.Folder+"/"+comm+"/"+m["execute"].(string), paramsRun)
+				cmd := exec.Command("")
+				if len(params) != 0 {
+					// cmd = exec.Command(cli.Folder+"/"+comm+"/"+m["execute"].(string), params...)
+					cmd = exec.Command(cli.Folder+"/"+comm+"/"+m["execute"].(string), strings.Join(params, " "))
+				} else {
+					cmd = exec.Command(cli.Folder + "/" + comm + "/" + m["execute"].(string))
+				}
+				fmt.Println(cmd)
 				cmd.Stdout = os.Stdout
 				cmd.Stderr = os.Stderr
 				cmd.Stdin = os.Stdin
