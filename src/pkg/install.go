@@ -88,7 +88,7 @@ func Install(pkgs []string) {
 				return
 			}
 
-			os.Chmod(pkgFolder+"/"+m["executable"].(string), 0755)
+			os.Chmod(pkgFolder+"/"+m["execute"].(string), 0755)
 		}
 
 		fmt.Println("Package installed.")
