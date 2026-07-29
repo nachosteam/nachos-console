@@ -50,7 +50,7 @@ func main() {
 			fmt.Println(strings.Join(params, " "))
 		case "about":
 			fmt.Printf("..................\n"+
-				"..#.....#..######.  %s\n"+
+				"..#.....#..#####..  %s\n"+
 				"..##....#....#....  %s\n"+
 				"..#.#...#....#....  By %s 2024 - 2026\n"+
 				"..#..#..#....#....  https://github.com/nachosteam/nachos-console\n"+
